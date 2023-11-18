@@ -9,11 +9,11 @@ export class Navbar extends Component {
     return (
       <div>
           <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-            <div className="container-fluid">
+            <div className="container-fluid" style={{paddingLeft: "80px"}}>
                 <a className="navbar-brand" href="/">
-                    <img src={logo} alt="Bootstrap" width="30" height="24"/>
+                    <img src={logo} alt="Bootstrap" width="60" height="56" style={{position: "absolute", left: "0px", top: "0px", paddingRight: "4px", backgroundColor: "white"}}/>
                 </a>
-                <a className="navbar-brand" href="/">Navbar</a>
+                <a className="navbar-brand" href="/">NewsMonkey</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="/navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>

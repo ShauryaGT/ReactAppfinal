@@ -1,48 +1,73 @@
 import React, { Component } from 'react'
+import Loader from './Loader';
 import Newsitem from './Newsitem'
-import scrapes from '../scrapes.jpeg'
 
 export class News extends Component {
+  constructor(){
+    super();
+    this.state = {
+      articles : [],
+      loading : false,
+      page : 1,
+      totalCount : 0      
+    };
+  }
+
+  async componentDidMount(){
+    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=7d556904b93146dab52e2959950c1544";
+    this.setState({ loading : true });
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({ loading : false });
+    this.setState({ articles : parsedData.articles, totalCount : parsedData.totalResults });
+  }
+  
+  handlePreviousClick = async () => {
+    window.scroll({
+      top: 0,
+    });
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=7d556904b93146dab52e2959950c1544&page=${this.state.page - 1}&pagesize=20`;
+    this.setState({ loading : true });
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({ loading : false });
+    this.setState({ page : this.state.page - 1, articles : parsedData.articles });
+  }
+
+  handleNextClick = async () => {
+    window.scroll({
+      top: 0,
+    });
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=7d556904b93146dab52e2959950c1544&page=${this.state.page + 1}&pagesize=20`;
+    this.setState({ loading : true });
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({ loading : false });
+    this.setState({ page : this.state.page + 1, articles : parsedData.articles });
+  }
+
   render() {
     return (
-
         <div className="container my-2">
             <h2>Today's headlines</h2>
+            {this.state.loading && <div className="text-center">
+              <Loader/>
+            </div> }
             <div className="container">
-                <div class="row">
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                </div>  
-                <div class="row">
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                    <div class="col">
-                    <Newsitem title="Why companies are racing to build the world’s biggest bug farm"  description="Companies are building bigger and bigger insect farms that rear crickets, mealworms and fly larvae as a low-carbon protein source for pet and livestock feed" url="https://www.washingtonpost.com/climate-solutions/2023/11/12/biggest-insect-farm-record/" source="https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/ZZ2L5RKVC7QOZLD7XI4TDIKC3Q_size-normalized.jpg&w=1440"/>
-                    </div>
-                </div>                  
-            </div>            
+               <div class="row">
+                  {this.state.articles.map(element => {
+                        return <div class="col-md-4" key={element.url}>
+                        <Newsitem title={element.title}  description={element.description} url={element.url} source={element.urlToImage}/>
+                        </div>
+                  })} 
+               </div>                           
+            </div>
+            { !this.state.loading && 
+              <div className="container d-flex justify-content-between">
+                <button type="button" class="btn btn-dark btn-lg" onClick={this.handlePreviousClick} disabled={this.state.page == 1}>&larr; Previous</button>
+                <button type="button" class="btn btn-dark btn-lg" onClick={this.handleNextClick} disabled={this.state.page == Math.ceil(this.state.totalCount/20)}>Next &rarr;</button>
+              </div>    
+            } 
       </div>
     )
   }
